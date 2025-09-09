@@ -73,8 +73,6 @@
 export default {
   setup() {
     function clickme() {
-      // For a real app, you'd replace this with an API call.
-      // A "toast" notification would be a better UX than an alert.
       alert("Your Message Has Been Sent!");
     }
     return { clickme };
@@ -107,6 +105,7 @@ export default {
   background-color: #0d6efd;
   color: #fff;
   padding: 40px 35px;
+  /* Border radius for large screens */
   border-radius: 20px 0 0 20px;
 }
 
@@ -214,9 +213,47 @@ textarea.form-control {
   box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
 }
 
+/* --- Responsive Adjustments --- */
+
+/* For tablets and below (when columns stack) */
 @media (max-width: 991px) {
   .info-column {
+    /* Top corners rounded, bottom corners square */
     border-radius: 20px 20px 0 0;
+  }
+  .form-column {
+    /* Match the info column to complete the card shape */
+    border-radius: 0 0 20px 20px;
+  }
+}
+
+/* For smaller mobile devices */
+@media (max-width: 768px) {
+  .contact-page {
+    padding: 20px 15px; /* Reduce page padding */
+  }
+
+  .info-column,
+  .form-column {
+    padding: 30px 25px; /* Reduce column padding */
+  }
+
+  .info-title {
+    font-size: 1.8rem;
+  }
+
+  .form-title {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+  }
+
+  .contact-details li {
+    font-size: 0.95rem; /* Slightly smaller font for details */
+  }
+
+  .send-btn {
+    padding: 10px 30px;
+    font-size: 1rem;
   }
 }
 </style>

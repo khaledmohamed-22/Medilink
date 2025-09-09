@@ -13,7 +13,7 @@
 
               <div class="cta-buttons mt-4">
                 <a href="Doctors">
-                  <button class="btn btn-info shadow-lg me-3">
+                  <button class="btn btn-info shadow-lg">
                     Book Appointment
                   </button>
                 </a>
@@ -67,7 +67,7 @@
   );
   background-size: cover;
   background-position: center;
-  min-height: 90vh; /* Adjust height */
+  min-height: 90vh;
   padding: 60px 0;
   color: #fff;
 }
@@ -79,7 +79,7 @@
 .title {
   font-size: 3.2rem;
   font-weight: 700;
-  font-family: "Poppins", sans-serif; /* Modern, clean font */
+  font-family: "Poppins", sans-serif;
   color: #fff;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -90,13 +90,14 @@
   font-weight: 400;
   color: #f0f0f0;
   max-width: 500px;
-  margin: 0 auto; /* Center on smaller screens */
+  /* On large screens, margin is set by text-lg-start, but on mobile it's auto */
+  margin: 0 auto;
 }
 
 .divider {
   width: 100px;
   border: 2px solid #fff;
-  margin: 20px auto 25px; /* Center divider */
+  margin: 20px auto 25px;
   opacity: 0.8;
 }
 
@@ -109,6 +110,7 @@
   letter-spacing: 0.5px;
   transition: all 0.3s ease;
   border-width: 2px;
+  width: auto; /* Allow buttons to size to content */
 }
 
 .btn-info {
@@ -149,14 +151,14 @@
 
 /* --- Modern Footer --- */
 .site-footer {
-  background: #f8f9fa; /* Light background */
-  color: #555; /* Darker text for readability */
-  padding: 40px 0 20px;
+  background: #f8f9fa;
+  color: #555;
+  padding: 40px 15px; /* Add horizontal padding for mobile */
   font-family: "Poppins", sans-serif;
 }
 
 .site-footer .brand {
-  color: #0ab1ed; /* Primary color */
+  color: #0ab1ed;
   font-weight: 700;
   font-size: 1.5rem;
 }
@@ -171,8 +173,9 @@
   padding: 0;
   margin: 25px 0;
   display: flex;
+  flex-wrap: wrap; /* Allow links to wrap on smaller screens */
   justify-content: center;
-  gap: 25px;
+  gap: 20px; /* Adjust gap for better spacing */
 }
 
 .footer-links li a {
@@ -202,5 +205,43 @@
   font-size: 0.85rem;
   color: #aaa;
   margin-top: 20px;
+}
+
+/* --- Responsive Styles for Mobile --- */
+@media (max-width: 768px) {
+  .home {
+    padding: 40px 15px; /* Adjust padding for smaller screens */
+    min-height: 80vh;
+    text-align: center; /* Ensure text is always centered on mobile */
+  }
+
+  .title {
+    font-size: 2.5rem; /* Reduce title font size */
+  }
+
+  .subtitle {
+    font-size: 1.1rem; /* Reduce subtitle font size */
+  }
+
+  .divider {
+    margin: 15px auto 20px; /* Adjust divider margin */
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center;
+    gap: 15px; /* Add space between stacked buttons */
+  }
+
+  .cta-buttons .btn {
+    width: 100%; /* Make buttons full width of their container */
+    max-width: 300px; /* Set a max-width for better appearance */
+    margin: 0 !important; /* Reset horizontal margin */
+  }
+
+  .footer-links {
+    gap: 15px; /* Reduce gap in footer links */
+  }
 }
 </style>

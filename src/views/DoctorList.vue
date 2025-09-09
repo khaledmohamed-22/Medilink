@@ -60,13 +60,14 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+// Import onMounted and onUnmounted for lifecycle hooks
+import { ref, computed, onMounted, onUnmounted } from "vue";
 
 export default {
   setup() {
     const searchText = ref("");
     const doctors = ref([
-      // Your doctors array remains the same...
+      // ... your doctors array
       {
         id: 1,
         name: "Dr. Sarah Johnson",
@@ -105,17 +106,40 @@ export default {
       },
     ]);
 
-    // **IMPROVEMENT**: Search now filters by NAME and SPECIALTY
     const filteredDoctors = computed(() => {
-      if (!searchText.value) {
-        return doctors.value;
-      }
+      if (!searchText.value) return doctors.value;
       const searchLower = searchText.value.toLowerCase();
       return doctors.value.filter(
-        (doctor) =>
-          doctor.name.toLowerCase().includes(searchLower) ||
-          doctor.specialty.toLowerCase().includes(searchLower)
+        (doc) =>
+          doc.name.toLowerCase().includes(searchLower) ||
+          doc.specialty.toLowerCase().includes(searchLower)
       );
+    });
+
+    const observer = ref(null);
+
+    const handleIntersect = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        }
+      });
+    };
+
+    onMounted(() => {
+      observer.value = new IntersectionObserver(handleIntersect, {
+        root: null,
+        threshold: 0.1,
+      });
+
+      const elementsToAnimate = document.querySelectorAll(".fade-zoom");
+      elementsToAnimate.forEach((el) => observer.value.observe(el));
+    });
+
+    onUnmounted(() => {
+      if (observer.value) {
+        observer.value.disconnect();
+      }
     });
 
     return { searchText, filteredDoctors };
@@ -124,12 +148,10 @@ export default {
 </script>
 
 <style scoped>
-/* --- Page Layout & Typography --- */
 .doctors-page {
-  background-color: #f8f9fa; /* Light, clean background */
+  background-color: #f8f9fa;
   min-height: 100vh;
 }
-
 .page-title {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
@@ -137,17 +159,14 @@ export default {
   color: #1b3a4b;
   margin-top: 5%;
 }
-
 .page-subtitle {
   font-size: 1.1rem;
   color: #6c757d;
 }
 
-/* --- Enhanced Search Bar --- */
 .search-wrapper {
   position: relative;
 }
-
 .search-icon {
   position: absolute;
   top: 50%;
@@ -156,23 +175,20 @@ export default {
   color: #adb5bd;
   font-size: 1.2rem;
 }
-
 .search-input {
   border-radius: 50px;
-  padding: 15px 25px 15px 55px; /* Left padding for icon */
+  padding: 15px 25px 15px 55px;
   font-size: 1.1rem;
   border: 1px solid #dee2e6;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
-
 .search-input:focus {
   box-shadow: 0 5px 20px rgba(0, 119, 182, 0.2);
   border-color: #0ab1ed;
   outline: none;
 }
 
-/* --- Enhanced Doctor Card --- */
 .doctor-card {
   background-color: #fff;
   border: none;
@@ -181,28 +197,23 @@ export default {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .doctor-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
-
 .card-img-container {
   height: 60%;
   overflow: hidden;
 }
-
 .doctor-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Prevents image distortion */
+  object-fit: cover;
   object-position: top;
 }
-
 .card-body {
   padding: 25px;
 }
-
 .card-title {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
@@ -210,14 +221,12 @@ export default {
   color: #1b3a4b;
   margin-bottom: 5px;
 }
-
 .card-specialty {
-  color: #0077b6; /* Consistent theme color */
+  color: #0077b6;
   font-weight: 500;
   font-size: 1rem;
   margin-bottom: 20px;
 }
-
 .booking-btn {
   background: linear-gradient(135deg, #0ab1ed, #0077b6);
   border: none;
@@ -227,13 +236,11 @@ export default {
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 119, 182, 0.2);
 }
-
 .booking-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 119, 182, 0.3);
 }
 
-/* --- Animations (from your original code) --- */
 @keyframes fadeDown {
   from {
     opacity: 0;
@@ -244,7 +251,6 @@ export default {
     transform: translateY(0);
   }
 }
-
 @keyframes fadeLeft {
   from {
     opacity: 0;
@@ -255,25 +261,20 @@ export default {
     transform: translateX(0);
   }
 }
-
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 .fade-down {
   animation: fadeDown 0.8s ease-out forwards;
 }
 .fade-left {
   animation: fadeLeft 0.8s ease-out forwards;
 }
+
 .fade-zoom {
-  animation: zoomIn 0.6s ease-out forwards;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-zoom.in-view {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>

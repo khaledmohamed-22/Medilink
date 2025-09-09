@@ -21,21 +21,32 @@
 
             <div class="cta-buttons">
               <a href="#booking-form">
-                <button class="btn btn-primary shadow me-3">
+                <button class="btn btn-primary shadow">
                   Book an Appointment
                 </button>
               </a>
-              <button class="btn btn-secondary">Call Now</button>
+              <a href="tel:+201234567890">
+                <button class="btn btn-secondary">Call Now</button>
+              </a>
             </div>
           </div>
         </div>
 
         <div class="col-lg-6 col-md-12 text-center">
-          <img
-            class="hero-image img-fluid"
-            src="../assets/doc.png"
-            alt="Doctor"
-          />
+          <div class="hero-image-wrapper">
+            <img
+              v-if="doctorImage"
+              class="hero-image img-fluid"
+              :src="doctorImage"
+              alt="Doctor"
+            />
+            <img
+              v-else
+              class="hero-image img-fluid"
+              src="../assets/doc.png"
+              alt="Doctor"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -70,7 +81,12 @@
 
             <div class="mb-3">
               <label for="date" class="form-label">Available Times:</label>
-              <select class="form-select" id="date" v-model="appointmentTime">
+              <select
+                class="form-select"
+                id="date"
+                v-model="appointmentTime"
+                required
+              >
                 <option disabled value="">Please select a time</option>
                 <option value="10:00 AM">10:00 AM</option>
                 <option value="11:00 AM">11:00 AM</option>
@@ -110,8 +126,6 @@
 </template>
 
 <script>
-// Your <script> section remains the same.
-// ...
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -123,10 +137,9 @@ export default {
     const doctorName = route.query.name;
     const doctorSpecialty = route.query.specialty;
     const doctorImage = route.query.image;
-    const appointmentTime = ref(""); // Default value for the select dropdown
+    const appointmentTime = ref("");
 
     function onclick() {
-      // A modal or "toast" notification would be a better UX than an alert!
       alert("Your Reservation is Submitted");
       router.push({
         name: "Appointments",
@@ -158,6 +171,7 @@ export default {
   background-color: #f8f9fa;
   font-family: "Poppins", sans-serif;
   padding: 4rem 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* --- Hero Section --- */
@@ -192,9 +206,36 @@ export default {
   color: #6c757d;
   margin-bottom: 2rem;
 }
-.hero-image {
+
+/* --- NEW: Image Wrapper for enhanced styling --- */
+.hero-image-wrapper {
+  position: relative;
+  width: fit-content; /* Ensure wrapper only takes image width */
   max-width: 85%;
+  margin: 0 auto; /* Center the wrapper */
+  padding: 10px; /* Space for the "glowing" effect */
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    #e0f2f7,
+    #c1e4f3
+  ); /* Soft gradient background */
+  box-shadow: 0 15px 30px rgba(0, 119, 182, 0.2); /* Enhanced shadow */
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+.hero-image-wrapper:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 119, 182, 0.3);
+}
+
+.hero-image {
+  border-radius: 15px; /* Slightly rounded corners for the image */
+  border: 3px solid #fff; /* White border around the image */
+  display: block; /* Remove extra space below image */
+  width: 100%; /* Make image fill its wrapper */
   height: auto;
+  object-fit: cover;
   animation: fadeInRight 1.3s ease-out;
 }
 
@@ -226,13 +267,20 @@ export default {
   border-color: #adb5bd;
   transform: translateY(-3px);
 }
+.cta-buttons > a > .btn {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 
+/* --- Form Section --- */
+.form-section {
+  padding-bottom: 4rem;
+}
 .booking-form {
   background: #fff;
   border-radius: 20px;
   padding: 2.5rem;
   border: 1px solid #e9ecef;
-  margin-top: 17%;
 }
 .form-title {
   font-weight: 700;
@@ -258,6 +306,7 @@ export default {
   outline: none;
 }
 
+/* --- Animations --- */
 @keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -279,12 +328,18 @@ export default {
   }
 }
 
+/* --- Responsive Styles --- */
 @media (max-width: 991px) {
-  .hero-image {
+  .hero-section {
+    padding-bottom: 3rem;
+  }
+  .hero-image-wrapper {
+    /* Apply margin to the wrapper now */
     margin-top: 3rem;
   }
   .text-content,
-  .hero-image {
+  .hero-image-wrapper {
+    /* Center the wrapper too */
     text-align: center;
   }
   .divider {
@@ -294,12 +349,36 @@ export default {
     justify-content: center;
   }
 }
+
 @media (max-width: 768px) {
+  .booking-page {
+    padding: 2rem 0;
+  }
   .title {
     font-size: 2.2rem;
   }
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  .description {
+    font-size: 0.95rem;
+  }
   .booking-form {
     padding: 1.5rem;
+  }
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .cta-buttons > a {
+    width: 100%;
+    max-width: 300px;
+  }
+  .cta-buttons > a > .btn {
+    width: 100%;
+    margin: 0;
   }
 }
 </style>

@@ -4,6 +4,7 @@
       <a class="navbar-brand fw-bold fs-3" href="#">MediLink</a>
 
       <button
+        ref="navbarToggler"
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
@@ -14,26 +15,35 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="Nav">
+      <div ref="navbarCollapse" class="collapse navbar-collapse" id="Nav">
         <ul class="navbar-nav ms-auto text-center">
           <li class="nav-item">
-            <router-link class="nav-link" to="/">Home</router-link>
-          </li>
-
-          <li class="nav-item">
-            <router-link class="nav-link" to="/Doctors">Doctors</router-link>
+            <router-link class="nav-link" to="/" @click="closeNavbar"
+              >Home</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/Booking">Booking</router-link>
+            <router-link class="nav-link" to="/Doctors" @click="closeNavbar"
+              >Doctors</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/Appointments"
+            <router-link class="nav-link" to="/Booking" @click="closeNavbar"
+              >Booking</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              to="/Appointments"
+              @click="closeNavbar"
               >Appointments</router-link
             >
           </li>
-
           <li class="nav-item">
-            <router-link class="nav-link" to="/Contact">Contact</router-link>
+            <router-link class="nav-link" to="/Contact" @click="closeNavbar"
+              >Contact</router-link
+            >
           </li>
         </ul>
       </div>
@@ -43,7 +53,27 @@
   <router-view />
 </template>
 
+<script setup>
+import { ref } from "vue";
+
+// Create refs for the navbar toggler button and the collapsible element
+const navbarToggler = ref(null);
+const navbarCollapse = ref(null);
+
+/**
+ * Closes the mobile navbar menu if it's currently open.
+ */
+const closeNavbar = () => {
+  // Check if the navbar is expanded (Bootstrap adds the 'show' class)
+  if (navbarCollapse.value && navbarCollapse.value.classList.contains("show")) {
+    // Programmatically click the toggler button to collapse the menu
+    navbarToggler.value.click();
+  }
+};
+</script>
+
 <style scoped>
+/* Your existing styles remain exactly the same */
 .navbar {
   background: rgba(10, 150, 220, 0.7);
   backdrop-filter: blur(10px);
