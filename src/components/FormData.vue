@@ -1,7 +1,7 @@
 <template>
   <div class="contact-page">
     <div class="container">
-      <div class="contact-card shadow-lg">
+      <div class="contact-card shadow-lg" style="margin-left: 7%">
         <div class="row g-0">
           <div class="col-lg-5 info-column">
             <h2 class="info-title">Get in Touch</h2>
@@ -98,6 +98,8 @@ export default {
   border-radius: 20px;
   overflow: hidden;
   border: none;
+  width: 100%; /* Ensure card takes full width of its container */
+  max-width: 900px; /* Optional: set a max-width for very large screens */
 }
 
 /* --- Info Column (Left Side) --- */
@@ -105,7 +107,6 @@ export default {
   background-color: #0d6efd;
   color: #fff;
   padding: 40px 35px;
-  /* Border radius for large screens */
   border-radius: 20px 0 0 20px;
 }
 
@@ -218,11 +219,9 @@ textarea.form-control {
 /* For tablets and below (when columns stack) */
 @media (max-width: 991px) {
   .info-column {
-    /* Top corners rounded, bottom corners square */
     border-radius: 20px 20px 0 0;
   }
   .form-column {
-    /* Match the info column to complete the card shape */
     border-radius: 0 0 20px 20px;
   }
 }
@@ -230,12 +229,12 @@ textarea.form-control {
 /* For smaller mobile devices */
 @media (max-width: 768px) {
   .contact-page {
-    padding: 20px 15px; /* Reduce page padding */
+    padding: 20px 10px; /* Further reduce page padding */
   }
 
   .info-column,
   .form-column {
-    padding: 30px 25px; /* Reduce column padding */
+    padding: 30px 20px; /* Reduce column padding */
   }
 
   .info-title {
@@ -248,12 +247,13 @@ textarea.form-control {
   }
 
   .contact-details li {
-    font-size: 0.95rem; /* Slightly smaller font for details */
+    font-size: 0.9rem; /* Slightly smaller font for details */
   }
 
   .send-btn {
-    padding: 10px 30px;
+    padding: 12px 30px; /* Increase padding for easier tapping */
     font-size: 1rem;
+    width: 100%; /* Make button full-width */
   }
 }
 </style>

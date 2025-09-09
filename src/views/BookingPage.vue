@@ -4,7 +4,9 @@
       <div class="row align-items-center">
         <div class="col-lg-6 col-md-12 text-center text-lg-start">
           <div class="text-content">
-            <h1 class="title">Book Your Doctor Appointment Online</h1>
+            <h1 class="title" style="margin-top: 6%">
+              Book Your Doctor Appointment Online
+            </h1>
             <hr class="divider" />
 
             <div v-if="doctorName" class="doctor-info">
