@@ -22,24 +22,32 @@ export default {
 
 <style>
 /* ── Global reset & tokens ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
-  --navy:          #0d1b2a;
-  --teal:          #0ab1ed;
-  --teal-dark:     #0081b4;
-  --teal-light:    #e0f6fd;
-  --surface:       #f8fafb;
-  --white:         #ffffff;
-  --text-primary:  #0d1b2a;
-  --text-secondary:#546e7a;
-  --border:        #e2e8f0;
-  --font-display:  "Playfair Display", Georgia, serif;
-  --font-body:     "DM Sans", system-ui, sans-serif;
+  --navy: #0d1b2a;
+  --teal: #0ab1ed;
+  --teal-dark: #0081b4;
+  --teal-light: #e0f6fd;
+  --surface: #f8fafb;
+  --white: #ffffff;
+  --text-primary: #0d1b2a;
+  --text-secondary: #546e7a;
+  --border: #e2e8f0;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
   --navbar-height: 68px;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: var(--font-body);
@@ -50,7 +58,9 @@ body {
 }
 
 /* Pages need top padding to clear the fixed navbar */
-.main-content { padding-top: var(--navbar-height); }
+.main-content {
+  padding-top: var(--navbar-height);
+}
 
 /* ── Page transitions ── */
 .page-enter-active,
